@@ -64,11 +64,14 @@ OreVeil is a post-quantum decentralized trading rollup designed to eliminate tox
 ```
 oreveil/
 ├── contracts/
+│   ├── OreVeilSettler.sol        # L1 settlement vault and ML-DSA-87 precompile caller
 │   └── interfaces/
 │       ├── IPQCVerifier.sol      # Native precompile 0x...0a01 interface
 │       └── IPQCStatus.sol        # Native precompile 0x...0a02 interface
 ├── test/
-│   └── sdk-connection.test.ts    # Live Diana testnet & PQC verification suite
+│   ├── sdk-connection.test.ts    # Live Diana testnet & PQC verification suite
+│   └── unit/
+│       └── OreVeilSettler.test.ts # Settlement vault & Merkle withdrawal unit tests
 ├── hardhat.config.ts             # Solidity 0.8.24 viaIR configuration
 ├── package.json                  # Dependencies (@qorechain/sdk, @qorechain/qoresign)
 └── tsconfig.json                 # TypeScript ES2022 configuration
@@ -91,9 +94,15 @@ npm install
 ```bash
 npx hardhat compile
 ```
-*Compiles Solidity interfaces with `viaIR: true` and 200 optimizer runs.*
+*Compiles Solidity contracts and interfaces with `viaIR: true` and 200 optimizer runs.*
 
-### 3. Run Live Diana Testnet Verification Suite
+### 3. Run All Test Suites
+```bash
+npx hardhat test
+```
+*Executes 30 automated tests across both the live Diana testnet connection suite and the OreVeilSettler vault unit test suite.*
+
+### 4. Run Live Diana Testnet Verification Suite Individually
 ```bash
 npx hardhat test test/sdk-connection.test.ts
 ```
@@ -103,6 +112,12 @@ This live test suite performs real network queries without mock doubles:
 - Validates the network gas price floor ($\ge 0.1\text{ uqor}$).
 - Generates a real NIST FIPS 204 ML-DSA-87 keypair (2,592-byte public key) and signature (4,627 bytes) via `@qorechain/qoresign`.
 - Executes a live `staticcall` to precompile `0x0000000000000000000000000000000000000a01`, receiving on-chain proof of post-quantum signature verification.
+
+### 5. Run OreVeilSettler Unit Tests Individually
+```bash
+npx hardhat test test/unit/OreVeilSettler.test.ts
+```
+*Verifies 20 unit assertions covering deposits, precompile staticcall guards, monotonic batching, and Merkle withdrawals.*
 
 ---
 
