@@ -1,0 +1,39 @@
+{
+  "name": "oreveil",
+  "version": "0.1.0",
+  "description": "Post-Quantum Frequent Batch Auction Rollup on QoreChain",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "build": "hardhat compile",
+    "test": "hardhat test",
+    "test:diana": "hardhat test --network diana"
+  },
+  "keywords": [
+    "qorechain",
+    "post-quantum",
+    "fba",
+    "rollup",
+    "defi",
+    "ml-dsa-87",
+    "ml-kem-1024"
+  ],
+  "author": "OreVeil Protocol Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@types/node": "^20.11.0",
+    "dotenv": "^16.4.5",
+    "hardhat": "^2.22.18",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.2.0",
+    "@qorechain/qoresign": "^0.2.0",
+    "@qorechain/rdk": "^0.9.0",
+    "@qorechain/sdk": "^0.14.0",
+    "ethers": "^6.13.5"
+  }
+}
