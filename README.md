@@ -81,11 +81,14 @@ oreveil/
 │   ├── deploy-settler.ts         # Automated Hardhat deployment script for Diana Testnet
 │   ├── register-and-open-window.ts # PQC key registration & EVM authorization window script
 │   └── register-kem-key.ts       # Sequencer NIST FIPS 203 (ML-KEM-1024) on-chain registration script
+├── sequencer/
+│   └── matchingEngine.ts         # Frequent Batch Auction (FBA) uniform-price clearing engine & state roots
 ├── test/
 │   ├── sdk-connection.test.ts    # Live Diana testnet & PQC verification suite
 │   └── unit/
 │       ├── OreVeilSettler.test.ts # Settlement vault & Merkle withdrawal unit tests
-│       └── OrderSealing.test.ts   # 5-layer ML-KEM-1024 sealing & tamper resistance suite
+│       ├── OrderSealing.test.ts   # 5-layer ML-KEM-1024 sealing & tamper resistance suite
+│       └── MatchingEngine.test.ts # 5-layer FBA matching engine & state root pipeline suite
 ├── hardhat.config.ts             # Solidity 0.8.24 viaIR configuration
 ├── package.json                  # Dependencies (@qorechain/sdk, @qorechain/qoresign)
 └── tsconfig.json                 # TypeScript ES2022 configuration
@@ -114,7 +117,7 @@ npx hardhat compile
 ```bash
 npx hardhat test
 ```
-*Executes 51 automated tests across the live Diana testnet connection suite, the OreVeilSettler vault unit test suite, and the ML-KEM-1024 confidential order sealing suite.*
+*Executes 72 automated tests across the live Diana testnet connection suite, the OreVeilSettler vault unit test suite, the ML-KEM-1024 confidential order sealing suite, and the FBA matching engine suite.*
 
 ### 4. Run Live Diana Testnet Verification Suite Individually
 ```bash
@@ -132,6 +135,18 @@ This live test suite performs real network queries without mock doubles:
 npx hardhat test test/unit/OreVeilSettler.test.ts
 ```
 *Verifies 20 unit assertions covering deposits, precompile staticcall guards, monotonic batching, and Merkle withdrawals.*
+
+### 6. Run Confidential Order Sealing Tests Individually
+```bash
+npx hardhat test test/unit/OrderSealing.test.ts
+```
+*Verifies 21 unit assertions across 5 layers covering NIST FIPS 203 (ML-KEM-1024) mathematical invariants, AES-256-GCM authenticated encryption, bit-flip tamper resistance, mempool opacity, and 100-round randomized fuzzing.*
+
+### 7. Run FBA Matching Engine Tests Individually
+```bash
+npx hardhat test test/unit/MatchingEngine.test.ts
+```
+*Verifies 21 unit assertions across 5 layers covering uniform price determination, volume maximization, midpoint plateau resolution, pro-rata marginal fairness, zero-wei token conservation, decimal scaling (6 vs 18), on-chain Merkle withdrawal proof verification with OreVeilSettler, and 50-epoch randomized fuzzing.*
 
 ---
 
