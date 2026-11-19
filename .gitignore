@@ -8,6 +8,7 @@ coverage/
 coverage.json
 *.log
 .env
+deployments/*key*
 
 # Internal Project Memory & Tracking Docs
 ARCHITECTURE.md

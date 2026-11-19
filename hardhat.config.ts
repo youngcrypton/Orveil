@@ -4,6 +4,20 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
+function getAccounts(): string[] {
+  const key = process.env.DEPLOYER_PRIVATE_KEY?.trim();
+  if (!key) return [];
+  if (key.includes(" ")) {
+    try {
+      const { ethers } = require("ethers");
+      return [ethers.Wallet.fromPhrase(key).privateKey];
+    } catch {
+      return [];
+    }
+  }
+  return [key.startsWith("0x") ? key : `0x${key}`];
+}
+
 const config: HardhatUserConfig = {
   solidity: {
     version: "0.8.24",
@@ -22,12 +36,11 @@ const config: HardhatUserConfig = {
     diana: {
       url: "https://evm-testnet.qore.host",
       chainId: 9800,
-      gasPrice: 100000000000, // 0.1 uqor minimum gas price floor
-      accounts: process.env.DEPLOYER_PRIVATE_KEY
-        ? [process.env.DEPLOYER_PRIVATE_KEY]
-        : []
+      gasPrice: 110000000000, // 0.11 uqor
+      accounts: getAccounts()
     }
   },
+
   paths: {
     sources: "./contracts",
     tests: "./test",

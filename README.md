@@ -56,6 +56,9 @@ OreVeil is a post-quantum decentralized trading rollup designed to eliminate tox
 | **Minimum Gas Price Floor** | `0.1 uqor` (`100,000,000,000 wei`) |
 | **PQC Verifier Precompile** | `0x0000000000000000000000000000000000000a01` |
 | **PQC Key Status Precompile**| `0x0000000000000000000000000000000000000a02` |
+| **Deployed Settler Vault** | `0xc6dCB4577c1B36B78721F9Ac656Df684F89a6e44` |
+| **Settler Deployment Tx** | [`0x43e145d976d19bef2954c9bb2e784a1a55a0ee2249c51e96f2f9a8afe4167fb7`](https://explore.qore.network/tx/0x43e145d976d19bef2954c9bb2e784a1a55a0ee2249c51e96f2f9a8afe4167fb7) |
+| **Deployment Block Height** | `10323295` |
 
 ---
 
@@ -68,6 +71,11 @@ oreveil/
 │   └── interfaces/
 │       ├── IPQCVerifier.sol      # Native precompile 0x...0a01 interface
 │       └── IPQCStatus.sol        # Native precompile 0x...0a02 interface
+├── deployments/
+│   └── diana.json                # Live Diana Testnet deployment metadata & contract address
+├── scripts/
+│   ├── deploy-settler.ts         # Automated Hardhat deployment script for Diana Testnet
+│   └── register-and-open-window.ts # PQC key registration & EVM authorization window script
 ├── test/
 │   ├── sdk-connection.test.ts    # Live Diana testnet & PQC verification suite
 │   └── unit/
