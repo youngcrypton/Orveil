@@ -59,6 +59,8 @@ OreVeil is a post-quantum decentralized trading rollup designed to eliminate tox
 | **Deployed Settler Vault** | `0xc6dCB4577c1B36B78721F9Ac656Df684F89a6e44` |
 | **Settler Deployment Tx** | [`0x43e145d976d19bef2954c9bb2e784a1a55a0ee2249c51e96f2f9a8afe4167fb7`](https://explore.qore.network/tx/0x43e145d976d19bef2954c9bb2e784a1a55a0ee2249c51e96f2f9a8afe4167fb7) |
 | **Deployment Block Height** | `10323295` |
+| **Registered QoreSeal KEM Key** | [`767C59413D80DA843CC11C2D81164267E0993625B93E70EAFF7D8BA21A4961B5`](https://explore.qore.network/tx/767C59413D80DA843CC11C2D81164267E0993625B93E70EAFF7D8BA21A4961B5) |
+| **QoreSeal Registration Block**| `10372805` (Algorithm: ML-KEM-1024, 1,568 bytes) |
 
 ---
 
@@ -66,6 +68,8 @@ OreVeil is a post-quantum decentralized trading rollup designed to eliminate tox
 
 ```
 oreveil/
+├── client/
+│   └── orderClient.ts            # Client-side ML-KEM-1024 sealing & AES-256-GCM envelope engine
 ├── contracts/
 │   ├── OreVeilSettler.sol        # L1 settlement vault and ML-DSA-87 precompile caller
 │   └── interfaces/
@@ -75,11 +79,13 @@ oreveil/
 │   └── diana.json                # Live Diana Testnet deployment metadata & contract address
 ├── scripts/
 │   ├── deploy-settler.ts         # Automated Hardhat deployment script for Diana Testnet
-│   └── register-and-open-window.ts # PQC key registration & EVM authorization window script
+│   ├── register-and-open-window.ts # PQC key registration & EVM authorization window script
+│   └── register-kem-key.ts       # Sequencer NIST FIPS 203 (ML-KEM-1024) on-chain registration script
 ├── test/
 │   ├── sdk-connection.test.ts    # Live Diana testnet & PQC verification suite
 │   └── unit/
-│       └── OreVeilSettler.test.ts # Settlement vault & Merkle withdrawal unit tests
+│       ├── OreVeilSettler.test.ts # Settlement vault & Merkle withdrawal unit tests
+│       └── OrderSealing.test.ts   # 5-layer ML-KEM-1024 sealing & tamper resistance suite
 ├── hardhat.config.ts             # Solidity 0.8.24 viaIR configuration
 ├── package.json                  # Dependencies (@qorechain/sdk, @qorechain/qoresign)
 └── tsconfig.json                 # TypeScript ES2022 configuration
@@ -108,7 +114,7 @@ npx hardhat compile
 ```bash
 npx hardhat test
 ```
-*Executes 30 automated tests across both the live Diana testnet connection suite and the OreVeilSettler vault unit test suite.*
+*Executes 51 automated tests across the live Diana testnet connection suite, the OreVeilSettler vault unit test suite, and the ML-KEM-1024 confidential order sealing suite.*
 
 ### 4. Run Live Diana Testnet Verification Suite Individually
 ```bash
