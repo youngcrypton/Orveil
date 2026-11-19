@@ -82,13 +82,15 @@ oreveil/
 │   ├── register-and-open-window.ts # PQC key registration & EVM authorization window script
 │   └── register-kem-key.ts       # Sequencer NIST FIPS 203 (ML-KEM-1024) on-chain registration script
 ├── sequencer/
-│   └── matchingEngine.ts         # Frequent Batch Auction (FBA) uniform-price clearing engine & state roots
+│   ├── matchingEngine.ts         # Frequent Batch Auction (FBA) uniform-price clearing engine & state roots
+│   └── batchSequencer.ts         # L1 batch anchor submitter & NIST FIPS 204 (ML-DSA-87) signer
 ├── test/
 │   ├── sdk-connection.test.ts    # Live Diana testnet & PQC verification suite
 │   └── unit/
 │       ├── OreVeilSettler.test.ts # Settlement vault & Merkle withdrawal unit tests
 │       ├── OrderSealing.test.ts   # 5-layer ML-KEM-1024 sealing & tamper resistance suite
-│       └── MatchingEngine.test.ts # 5-layer FBA matching engine & state root pipeline suite
+│       ├── MatchingEngine.test.ts # 5-layer FBA matching engine & state root pipeline suite
+│       └── BatchSequencer.test.ts # 5-layer L1 batch anchor signer & settlement pipeline suite
 ├── hardhat.config.ts             # Solidity 0.8.24 viaIR configuration
 ├── package.json                  # Dependencies (@qorechain/sdk, @qorechain/qoresign)
 └── tsconfig.json                 # TypeScript ES2022 configuration
@@ -117,7 +119,7 @@ npx hardhat compile
 ```bash
 npx hardhat test
 ```
-*Executes 72 automated tests across the live Diana testnet connection suite, the OreVeilSettler vault unit test suite, the ML-KEM-1024 confidential order sealing suite, and the FBA matching engine suite.*
+*Executes 91 automated tests across the live Diana testnet connection suite, the OreVeilSettler vault unit test suite, the ML-KEM-1024 confidential order sealing suite, the FBA matching engine suite, and the L1 batch anchor signer suite.*
 
 ### 4. Run Live Diana Testnet Verification Suite Individually
 ```bash
@@ -147,6 +149,12 @@ npx hardhat test test/unit/OrderSealing.test.ts
 npx hardhat test test/unit/MatchingEngine.test.ts
 ```
 *Verifies 21 unit assertions across 5 layers covering uniform price determination, volume maximization, midpoint plateau resolution, pro-rata marginal fairness, zero-wei token conservation, decimal scaling (6 vs 18), on-chain Merkle withdrawal proof verification with OreVeilSettler, and 50-epoch randomized fuzzing.*
+
+### 8. Run L1 Batch Anchor Signer Tests Individually
+```bash
+npx hardhat test test/unit/BatchSequencer.test.ts
+```
+*Verifies 19 unit assertions across 5 layers covering commitment hash parity against Solidity, NIST FIPS 204 ML-DSA-87 signing (4,627 bytes), local pre-flight validation, state synchronization, sequence monotonicity guards, and 5-batch consecutive on-chain settlement on Hardhat EVM.*
 
 ---
 
