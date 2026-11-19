@@ -78,6 +78,8 @@ oreveil/
 ├── deployments/
 │   └── diana.json                # Live Diana Testnet deployment metadata & contract address
 ├── scripts/
+│   ├── lib/
+│   │   └── preflightCheck.ts     # Pre-flight environment & account solvency diagnostic module
 │   ├── deploy-settler.ts         # Automated Hardhat deployment script for Diana Testnet
 │   ├── register-and-open-window.ts # PQC key registration & EVM authorization window script
 │   └── register-kem-key.ts       # Sequencer NIST FIPS 203 (ML-KEM-1024) on-chain registration script
@@ -90,7 +92,8 @@ oreveil/
 │       ├── OreVeilSettler.test.ts # Settlement vault & Merkle withdrawal unit tests
 │       ├── OrderSealing.test.ts   # 5-layer ML-KEM-1024 sealing & tamper resistance suite
 │       ├── MatchingEngine.test.ts # 5-layer FBA matching engine & state root pipeline suite
-│       └── BatchSequencer.test.ts # 5-layer L1 batch anchor signer & settlement pipeline suite
+│       ├── BatchSequencer.test.ts # 5-layer L1 batch anchor signer & settlement pipeline suite
+│       └── PreflightCheck.test.ts # Pre-flight diagnostic assertions & live Diana testnet audit suite
 ├── hardhat.config.ts             # Solidity 0.8.24 viaIR configuration
 ├── package.json                  # Dependencies (@qorechain/sdk, @qorechain/qoresign)
 └── tsconfig.json                 # TypeScript ES2022 configuration
@@ -119,7 +122,7 @@ npx hardhat compile
 ```bash
 npx hardhat test
 ```
-*Executes 91 automated tests across the live Diana testnet connection suite, the OreVeilSettler vault unit test suite, the ML-KEM-1024 confidential order sealing suite, the FBA matching engine suite, and the L1 batch anchor signer suite.*
+*Executes 106 automated tests across the live Diana testnet connection suite, the OreVeilSettler vault unit test suite, the ML-KEM-1024 confidential order sealing suite, the FBA matching engine suite, the L1 batch anchor signer suite, and the pre-flight environment diagnostic suite.*
 
 ### 4. Run Live Diana Testnet Verification Suite Individually
 ```bash
@@ -155,6 +158,12 @@ npx hardhat test test/unit/MatchingEngine.test.ts
 npx hardhat test test/unit/BatchSequencer.test.ts
 ```
 *Verifies 19 unit assertions across 5 layers covering commitment hash parity against Solidity, NIST FIPS 204 ML-DSA-87 signing (4,627 bytes), local pre-flight validation, state synchronization, sequence monotonicity guards, and 5-batch consecutive on-chain settlement on Hardhat EVM.*
+
+### 9. Run Pre-Flight Diagnostic & Solvency Tests Individually
+```bash
+npx hardhat test test/unit/PreflightCheck.test.ts
+```
+*Verifies 15 diagnostic assertions covering key integrity (NIST ML-DSA-87 and ML-KEM-1024), deployer solvency floors, bytecode validation, and live Diana Testnet RPC auditing.*
 
 ---
 
