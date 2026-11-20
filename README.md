@@ -79,7 +79,8 @@ oreveil/
 │   └── diana.json                # Live Diana Testnet deployment metadata & contract address
 ├── scripts/
 │   ├── lib/
-│   │   └── preflightCheck.ts     # Pre-flight environment & account solvency diagnostic module
+│   │   ├── preflightCheck.ts     # Pre-flight environment & account solvency diagnostic module
+│   │   └── offchainPipeline.ts   # Off-chain cryptographic execution & reversible state engine
 │   ├── deploy-settler.ts         # Automated Hardhat deployment script for Diana Testnet
 │   ├── register-and-open-window.ts # PQC key registration & EVM authorization window script
 │   └── register-kem-key.ts       # Sequencer NIST FIPS 203 (ML-KEM-1024) on-chain registration script
@@ -93,7 +94,8 @@ oreveil/
 │       ├── OrderSealing.test.ts   # 5-layer ML-KEM-1024 sealing & tamper resistance suite
 │       ├── MatchingEngine.test.ts # 5-layer FBA matching engine & state root pipeline suite
 │       ├── BatchSequencer.test.ts # 5-layer L1 batch anchor signer & settlement pipeline suite
-│       └── PreflightCheck.test.ts # Pre-flight diagnostic assertions & live Diana testnet audit suite
+│       ├── PreflightCheck.test.ts # Pre-flight diagnostic assertions & live Diana testnet audit suite
+│       └── OffchainPipeline.test.ts # 5-layer off-chain pipeline & reversible state validation suite
 ├── hardhat.config.ts             # Solidity 0.8.24 viaIR configuration
 ├── package.json                  # Dependencies (@qorechain/sdk, @qorechain/qoresign)
 └── tsconfig.json                 # TypeScript ES2022 configuration
@@ -122,7 +124,7 @@ npx hardhat compile
 ```bash
 npx hardhat test
 ```
-*Executes 106 automated tests across the live Diana testnet connection suite, the OreVeilSettler vault unit test suite, the ML-KEM-1024 confidential order sealing suite, the FBA matching engine suite, the L1 batch anchor signer suite, and the pre-flight environment diagnostic suite.*
+*Executes 118 automated tests across the live Diana testnet connection suite, the OreVeilSettler vault unit test suite, the ML-KEM-1024 confidential order sealing suite, the FBA matching engine suite, the L1 batch anchor signer suite, the pre-flight environment diagnostic suite, and the off-chain execution pipeline suite.*
 
 ### 4. Run Live Diana Testnet Verification Suite Individually
 ```bash
@@ -164,6 +166,12 @@ npx hardhat test test/unit/BatchSequencer.test.ts
 npx hardhat test test/unit/PreflightCheck.test.ts
 ```
 *Verifies 15 diagnostic assertions covering key integrity (NIST ML-DSA-87 and ML-KEM-1024), deployer solvency floors, bytecode validation, and live Diana Testnet RPC auditing.*
+
+### 10. Run Off-Chain Cryptographic Pipeline & Reversibility Tests Individually
+```bash
+npx hardhat test test/unit/OffchainPipeline.test.ts
+```
+*Verifies 12 unit assertions across 5 layers covering deterministic trader derivation, confidential order sealing & decapsulation, FBA uniform clearing, zero-wei token conservation, Merkle root transitions, 4,627-byte ML-DSA-87 batch signing, and atomic rollback reversibility.*
 
 ---
 
