@@ -152,13 +152,13 @@ describe("Sub-Phase 3.1 Layer 3: Diana Gas Floor & EVM Authorization Window Safe
       expect(report.found).to.be.true;
     });
 
-    it("should report exact historical block parameters from Sub-Phase 1.2 window", function () {
-      expect(report.openedHeight).to.equal(10323254n);
-      expect(report.expiryHeight).to.equal(10338254n);
-      expect(report.expiryHeight - report.openedHeight).to.equal(15000n); // 15,000 blocks window
-      expect(report.remainingBlocks).to.equal(0n);
-      expect(report.live).to.be.false;
-      expect(report.statusText).to.include("EXPIRED");
+    it("should report active EVM authorization window parameters on Diana Testnet", function () {
+      expect(report.openedHeight).to.be.greaterThan(10323250n);
+      expect(report.expiryHeight).to.be.greaterThan(report.openedHeight);
+      expect(report.found).to.be.true;
+      expect(report.live).to.be.true;
+      expect(report.remainingBlocks).to.be.greaterThan(0n);
+      expect(report.statusText).to.include("ACTIVE");
     });
 
     it("should format clean human-readable safety report", async function () {

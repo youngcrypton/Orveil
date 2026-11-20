@@ -8,7 +8,10 @@
     "compile": "hardhat compile",
     "build": "hardhat compile",
     "test": "hardhat test",
-    "test:diana": "hardhat test --network diana"
+    "test:diana": "hardhat test --network diana",
+    "demo": "ts-node scripts/live-demo-run.ts",
+    "demo:dry-run": "ts-node scripts/live-demo-run.ts --dry-run",
+    "demo:broadcast": "ts-node scripts/live-demo-run.ts --broadcast"
   },
   "keywords": [
     "qorechain",

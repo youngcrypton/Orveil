@@ -16,7 +16,8 @@ import {
   DIANA_MIN_GAS_FLOOR_WEI
 } from "./safetyGuards";
 import { BatchCommitmentPayload } from "../../sequencer/batchSequencer";
-import { OreVeilSettler, OreVeilSettler__factory } from "../../typechain-types/contracts/OreVeilSettler";
+import { OreVeilSettler } from "../../typechain-types/contracts/OreVeilSettler";
+import { OreVeilSettler__factory } from "../../typechain-types/factories/contracts/OreVeilSettler__factory";
 
 dotenv.config();
 
@@ -93,15 +94,12 @@ export function resolveDeployerSigner(
   }
 
   // Handle mnemonic seed phrase vs raw hex private key
-  let wallet: ethers.Wallet;
   if (rawKey.includes(" ")) {
-    wallet = ethers.Wallet.fromPhrase(rawKey, provider);
+    return ethers.Wallet.fromPhrase(rawKey, provider);
   } else {
     const formattedHex = rawKey.startsWith("0x") ? rawKey : `0x${rawKey}`;
-    wallet = new ethers.Wallet(formattedHex, provider);
+    return new ethers.Wallet(formattedHex, provider);
   }
-
-  return wallet;
 }
 
 /**
@@ -219,8 +217,9 @@ export async function broadcastBatchSettlement(
   const balanceDeltaQor = ethers.formatEther(balanceDeltaWei);
 
   const gasUsed = receipt.gasUsed;
-  const effectiveGasPriceWei = receipt.gasPrice || gasConfig.effectiveGasPriceWei;
-  const totalFeeWei = gasUsed * effectiveGasPriceWei;
+  const effectiveGasPriceWei: bigint =
+    receipt.gasPrice != null ? BigInt(receipt.gasPrice) : gasConfig.effectiveGasPriceWei;
+  const totalFeeWei: bigint = gasUsed * effectiveGasPriceWei;
   const totalFeeQor = ethers.formatEther(totalFeeWei);
 
   // Step 7: Parse Emitted Event and Audit Contract State Advancement

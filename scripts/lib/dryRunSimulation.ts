@@ -19,8 +19,7 @@ import {
 import { OreVeilSettler } from "../../typechain-types/contracts/OreVeilSettler";
 import { OreVeilSettler__factory } from "../../typechain-types/factories/contracts/OreVeilSettler__factory";
 
-export const DEFAULT_DIANA_RPC = "https://evm-testnet.qore.host";
-export const DEFAULT_DEPLOYER_EVM = "0x7DE7d6CC73002f44A76334392555C9A4dDc0B561";
+export { DEFAULT_DIANA_RPC, DEFAULT_DEPLOYER_EVM };
 export const DEFAULT_SETTLER_ADDRESS = "0xc6dCB4577c1B36B78721F9Ac656Df684F89a6e44";
 export const DEFAULT_CALLER_ADDRESS = DEFAULT_DEPLOYER_EVM;
 export const MAX_BLOCK_GAS_LIMIT = 30_000_000n;
