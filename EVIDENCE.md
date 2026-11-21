@@ -26,3 +26,21 @@ precompile execution proofs executed against QoreChain Diana Testnet (`chainId: 
   - Zero-Wei Conservation: Strict mathematical balance conservation across all matched accounts
 
 ---
+
+## Live AMM Pool Swap Proof: Ship Weeks Badge ("First swap in a pool")
+- **Status**: `MINED_AND_VERIFIED`
+- **Timestamp**: `2026-11-21T09:04:56.000Z`
+- **Network**: QoreChain Diana Testnet (Cosmos `qorechain-diana`)
+- **Transaction Hash**: [`660C8D14A29D97358C235DBEB1BC2BE7FDCDACE25FD0E3B03A2101A585B8D415`](https://explore.qore.network/tx/660C8D14A29D97358C235DBEB1BC2BE7FDCDACE25FD0E3B03A2101A585B8D415)
+- **Mined Block**: [`#10484670`](https://explore.qore.network/block/10484670)
+- **Sender Address**: `qor10hnadnrnqqh5ffmrxsuj24wf5nwupdtp0zw8kt`
+- **AMM Pool ID**: `Pool #2` (Constant Product)
+- **Token In**: `1000 uqor` ($0.001\text{ QOR}$)
+- **Token Out**: `erc20:0x97143B771D34ddb9130b807b135Ae675A5a963CA` (`fUSD`)
+- **Gas Consumed**: `266,151` / `1,000,000` gas units
+- **Fee Paid**: `200000 uqor` (`0.2 QOR`)
+- **Message Type**: `/qorechain.amm.v1.MsgSwapExactIn`
+- **Signer Mode**: Hybrid `pqc-sign-bytes-v2` (`EthNativeSigner` + ML-DSA-87 account key)
+- **Portal Verification**: Enables 4th Ship Weeks Badge on `https://build.qorechain.io/me` and proves `AMM pools` network feature.
+
+---

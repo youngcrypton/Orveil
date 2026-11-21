@@ -14,7 +14,8 @@
     "demo:broadcast": "ts-node scripts/live-demo-run.ts --broadcast",
     "withdraw": "ts-node scripts/live-withdrawal-run.ts",
     "withdraw:dry-run": "ts-node scripts/live-withdrawal-run.ts --dry-run",
-    "withdraw:broadcast": "ts-node scripts/live-withdrawal-run.ts --broadcast --yes"
+    "withdraw:broadcast": "ts-node scripts/live-withdrawal-run.ts --broadcast --yes",
+    "badge:swap": "ts-node scripts/claim-swap-badge.ts"
   },
   "keywords": [
     "qorechain",
