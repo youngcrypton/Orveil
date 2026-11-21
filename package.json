@@ -16,7 +16,8 @@
     "withdraw:dry-run": "ts-node scripts/live-withdrawal-run.ts --dry-run",
     "withdraw:broadcast": "ts-node scripts/live-withdrawal-run.ts --broadcast --yes",
     "badge:swap": "ts-node scripts/claim-swap-badge.ts",
-    "audit:cbom": "ts-node scripts/generate-cbom.ts"
+    "audit:cbom": "ts-node scripts/generate-cbom.ts",
+    "mcp:server": "ts-node mcp/oreveil-server.ts"
   },
   "keywords": [
     "qorechain",
@@ -31,6 +32,8 @@
   "license": "MIT",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@qorechain/mcp": "^0.1.1",
+    "@qorechain/qore-cli": "^0.1.1",
     "@qorechain/qorescan": "^0.1.0",
     "@types/node": "^20.11.0",
     "dotenv": "^16.4.5",
