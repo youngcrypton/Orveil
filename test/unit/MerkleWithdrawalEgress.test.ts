@@ -102,7 +102,7 @@ describe("Sub-Phase 3.2 Layer 3: Live On-Chain Trustless Merkle Withdrawal Egres
     it("D2-1: should intercept invalid Merkle proof and return structured simulation failure without reverting runner", async function () {
       const testParams: WithdrawalParams = {
         batchId: 1,
-        withdrawalIndex: 0,
+        withdrawalIndex: 999,
         recipient: signerAddress,
         asset: ethers.ZeroAddress,
         amount: ethers.parseEther("1.0"),
@@ -115,7 +115,7 @@ describe("Sub-Phase 3.2 Layer 3: Live On-Chain Trustless Merkle Withdrawal Egres
 
       expect(report.success).to.be.false;
       expect(report.batchId).to.equal(1);
-      expect(report.withdrawalIndex).to.equal(0);
+      expect(report.withdrawalIndex).to.equal(999);
       expect(report.recipient.toLowerCase()).to.equal(signerAddress.toLowerCase());
       expect(report.asset).to.equal(ethers.ZeroAddress);
       expect(report.amount).to.equal(ethers.parseEther("1.0"));

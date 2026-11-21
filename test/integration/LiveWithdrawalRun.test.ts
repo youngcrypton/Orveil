@@ -179,9 +179,9 @@ describe("Sub-Phase 3.2 Layer 4: Unified Dual-Mode Egress CLI Runner & Automated
       expect(tree.verifyProof(leaf, proof, root)).to.be.true;
     });
 
-    it("4.3: should verify replay prevention defense mapping is queryable and clean", async function () {
+    it("4.3: should verify replay prevention defense mapping on Layer 1", async function () {
       const settler = OreVeilSettler__factory.connect(DEFAULT_SETTLER_ADDRESS, provider);
-      const leaf = computeWithdrawalLeaf(
+      const executedLeaf = computeWithdrawalLeaf(
         DIANA_CHAIN_ID,
         0,
         DEFAULT_DEPLOYER_EVM,
@@ -189,8 +189,20 @@ describe("Sub-Phase 3.2 Layer 4: Unified Dual-Mode Egress CLI Runner & Automated
         ethers.parseEther("1.0")
       );
 
-      const executed = await settler.executedWithdrawals(leaf);
-      expect(executed).to.be.false;
+      // Verifies the live executed leaf is marked true after on-chain broadcast
+      const executed = await settler.executedWithdrawals(executedLeaf);
+      expect(executed).to.be.true;
+
+      // Verifies an unexecuted leaf remains strictly false
+      const unexecutedLeaf = computeWithdrawalLeaf(
+        DIANA_CHAIN_ID,
+        999,
+        DEFAULT_DEPLOYER_EVM,
+        ethers.ZeroAddress,
+        ethers.parseEther("1.0")
+      );
+      const unexecuted = await settler.executedWithdrawals(unexecutedLeaf);
+      expect(unexecuted).to.be.false;
     });
   });
 
