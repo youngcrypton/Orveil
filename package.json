@@ -17,7 +17,8 @@
     "withdraw:broadcast": "ts-node scripts/live-withdrawal-run.ts --broadcast --yes",
     "badge:swap": "ts-node scripts/claim-swap-badge.ts",
     "audit:cbom": "ts-node scripts/generate-cbom.ts",
-    "mcp:server": "ts-node mcp/oreveil-server.ts"
+    "mcp:server": "ts-node mcp/oreveil-server.ts",
+    "watchtower": "ts-node watchtower/watcher.ts"
   },
   "keywords": [
     "qorechain",
